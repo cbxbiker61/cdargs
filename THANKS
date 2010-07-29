@@ -1,0 +1,100 @@
+Michael Schilli http://www.perlmeister.com
+    - initial idea (written in perl)
+    see: http://www.heise.de/ix/artikel/2001/01/179/
+    (german article)
+
+The guys in the iX forum who enhanced the script thus provding
+good ideas for the user interface.
+Forum (german) is at:
+http://www.heise.de/ix/foren/go.shtml?list=1&g=200101179
+
+
+
+Dan Allen <dan_at_mojavelinux.com>
+For more feedback and suggestions from the world 
+(on version 1.14 and the following).
+He wanted:
+- mutt/vim style keybindings for movement
+- resolving the list if only one entry
+- from other requests the Needle magic was born
+- don't use A_BOLD for highlighting of current entry
+  (I took A_STANDOUT instead)
+- ask user for a description and remove capitalize in default
+- adding of entries from the command line.
+- AND MUCH MORE...
+
+Plus he found most of the bugs and he provided the bash shell
+functions (check out the completion with cv [TAB]!!)!  
+This was most valuable input, Dan. 
+
+
+
+
+Damjan Lango <damjan.lango_at_hermes.si>
+    first feedback from the world wishing two features:
+    - history
+    - add function to add to the list current directory, not only 
+      the selected. 
+
+
+
+
+Tomi Ollila <Tomi.Ollila_at_sonera.com>
+For more feedback and suggestions from the world
+- return code != null for quitting
+- suggested introducing configurable keymaps
+
+
+
+Stephen Gildea and Juhapekka Tolvanen <juhtolv_at_st.jyu.fi>
+for corrections with quoting and portability of the shell functions.
+
+
+Oron Pered for correcting my asumptions about the backticks and
+terminal/curses things. I'm pretty sure that I'll use that in an
+upcoming project :). Plus the .spec file and instructions how to use
+it to build the RPM package.
+
+
+
+R"udiger Goetz <http://www.r-goetz.de> for tcsh completion
+
+
+Petra Malik <Petra.Malik_at_xtra.co.nz> for the Debian packaging and
+bugfixes. 
+Robi Malik <robi.malik_at_nexgo.de> for improvements to the bash completion
+code.
+
+
+Richard Lammers <Richard.Lammers_at_unh.edu> for highlight current
+directory in list feature idea and much more feedback
+
+Randy Chamberlin <littlemanrkc_at_subdimension.com> for whitespaces in
+paths (and descriptions) bug report
+
+Maximiliano Pin for suggestions to the user interface and bug
+reporting.
+
+
+Oscar Fernandez Sierra <oscar_at_el-mundo.net> for the patch that enables
+a variable width/length for the description (in contrast to the
+hardcoded 8 before that)
+
+
+Miki Tebeka <miki.tebeka_at_zoran.com> and Claus for the Cygwin things.
+
+Geert Jan Bex <http://uhasselt.be/~gjb> for changes to
+cdargs-bash.sh 
+
+Damon Harper <ds+dev-cdargs_at_usrbin.ca> for subdirectory completion
+in bash.
+
+
+Peace and Pleasure to you all!
+
++ www.skamphausen.de     __   __  _   __  __  -+
+| <` \____//            |__| |_  |_| |   |_    |
+|  \ ~~~  /             |    |__ | | |__ |__   |
++-  `-ll-'   May The Open Source Be With You! -+
+
+

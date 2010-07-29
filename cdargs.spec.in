@@ -1,0 +1,44 @@
+%define	profiledir	%{_sysconfdir}/profile.d
+
+Name:		@PACKAGE@
+Version:	@VERSION@
+Release:	1
+Vendor:		Stefan Kamphausen <http://www.skamphausen.de>
+License:	GPL
+Group:		Applications/File
+Packager:	Oron Peled <oron@actcom.co.il>
+Summary:	The Shell cd with bookmarks and browser
+Source:		http://www.skamphausen.de/software/cdargs/%name-%version.tar.gz
+URL:		http://www.skamphausen.de/software/cdargs/
+Buildroot:	%{_tmppath}/%{name}-%{version}-root
+
+%description
+Navigate cd Arguments/expand the shell built-in cd with bookmarks and browser
+
+%prep
+%setup
+
+%build
+%configure
+make
+
+%install
+rm -rf $RPM_BUILD_ROOT
+mkdir $RPM_BUILD_ROOT
+make DESTDIR=$RPM_BUILD_ROOT install
+
+mkdir -p $RPM_BUILD_ROOT%{profiledir}
+install -m 755 contrib/cdargs-bash.sh $RPM_BUILD_ROOT%{profiledir}/cdargs.sh
+install -m 755 contrib/cdargs-tcsh.csh $RPM_BUILD_ROOT%{profiledir}/cdargs.csh
+
+%files
+%defattr(-, root, root)
+%{_bindir}/cdargs
+%{profiledir}/cdargs.*
+%doc %{_mandir}/man1/cdargs.1*
+%doc AUTHORS ChangeLog COPYING INSTALL NEWS README THANKS TODO
+%doc contrib/cdargs.el
+
+%clean
+rm -rf $RPM_BUILD_ROOT
+

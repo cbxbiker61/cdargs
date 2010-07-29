@@ -1,0 +1,115 @@
+COMPILATION
+===========
+Installation is easy, do:
+
+$ configure
+$ make
+
+then become root and do:
+
+# make install-strip
+
+If you're not content with the displayed width of the description you
+might want to change cdargs.cc. Look for the lines
+# define DESCRIPTION_MAXLENGTH 18
+# define DESCRIPTION_BROWSELENGTH 8
+and change the numbers according to your taste.
+
+CREATE SHELL FUNCTION(S)
+========================
+For Versions 1.19 And Newer (bash)
+----------------------------------
+Simply copy the file contrib/cdargs-bash.sh somewhere into your $PATH
+and put a line like
+source cdargs-bash.sh
+in your ~/.bashrc. This loads some very useful functions into your shell.
+ (Please note that these functions could be improved but I don't have
+ enough bash knowledge for that.)
+
+For Versions 1.20 And Newer (tcsh)
+----------------------------------
+Copy the file contrib/cdargs-tcsh.csh to a place that you like and
+source it from your ~/.cshrc (or ~/.tcsh ?).
+Please note that I don't know much about tcsh (im bashi-ish) and thus
+this might be quite quirky... Any help appreciated in making the tcsh
+expansion as powerfull as Dan's bash functions.
+
+For Older Versions 
+------------------
+Put a line like the following into your shell startup-script
+(.profile, .bashrc, .zshrc, whatever) to create a shell function:
+
+function cv () { cdargs "$1" && cd "`cat "$HOME/.cdargsresult"`" }
+
+If you want to you can remove the file in your homedirectory after successfully 
+using cdargs:
+
+function cv () { cdargs "$1" && cd "`cat "$HOME/.cdargsresult"`" && rm -f "$HOME/.cdargsresult" }
+
+or you can echo the directory you changed to:
+
+function cv () { cdargs "$1" && cd "`cat "$HOME/.cdargsresult"`" && pwd ; }
+
+Another thing you might find useful is an alias for adding paths:
+function ca () { cdargs --add="$1" ; }
+function capwd () { cdargs --add=":$1:"`pwd` ; }
+
+
+(Note that the '&&' is just possible since version 1.11 which 
+introduced a reasonable return code to cdargs. Both version should work.)
+
+WRAPPING
+========
+If you do not like the cursor wrapping around on the top and the
+bottom of the list, start cdargs with the additional option --nowrap:
+
+Example:
+function cb () { cdargs --nowrap "$1" && cd `cat $HOME/.cdargsresult` ; }
+
+
+MORE HELP
+=========
+For more information try:
+
+$ configure --help
+$ cdargs --help
+or press 'H' or '?' while running cdargs. 
+
+Additionally since version 1.16 cdargs comes with a manpage.
+
+GNU/X Emacs
+===========
+Since version 1.24 there is a cdargs.el which you just put somewhere
+where Emacs can find it (see variable load-path) and the require it in
+your personal init file (may be one of ~/.emacs, ~/.xemacs/init.el
+~/.xemacs/my/config/personal.el or something else):
+(require 'cdargs)
+
+Appendix:
+=========
+
+Creating an RPM (thanks Oron!)
+------------------------------
+
+First way (assuming all directories relative to /usr/src/redhat):
+   - Put the .spec file in the SPECS directories
+   - Put the tar.gz file in the SOURCES directory
+   - From the SPECS directory run:
+        rpm -bb cdargs.spec # to build only binary RPM
+        rpm -bs cdargs.spec # to build only source RPM
+        rpm -ba cdargs.spec # to build both
+Second way (assuming the tar.gz file contains .spec file):
+   - Simply run:
+        rpm -ta cdargs-<version>.tar.gz
+
+The resulting binary RPM will be below the RPMS directory (e.g:
+RPMS/i386).
+
+Signing The Tarball
+-------------------
+The whole thing, including the tarball:
+gpg -a --sign cdargs-<version>.tar.gz 
+
+Just the signature:
+gpg -ab --default-key 0BA0A295 --sign cdargs-<version>.tar.gz
+

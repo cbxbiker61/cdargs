@@ -1,0 +1,543 @@
+2006-03-03  Stefan Kamphausen  <http://www.skamphausen.de>
+
+	* configure.in:  Version 1.35
+
+	* contrib/cdargs-bash.sh: Minor bugfix from Damon when completing
+	the second subdirectory. 
+
+2006-03-02  Stefan Kamphausen  <http://www.skamphausen.de>
+
+	* configure.in: Version 1.34
+
+	* contrib/cdargs-bash.sh: Many changes to make completion work
+	with subdirectories from Damon.
+
+2006-02-26  Stefan Kamphausen  <http://www.skamphausen.de>
+
+	* src/cdargs.cc: applied patch from Claus for empty lines in
+	bookmark file.
+
+	* THANKS: Added Damon.
+	Changed email adresses to contain _at_ instead of the real at.
+
+2005-11-12  Stefan Kamphausen  <http://www.skamphausen.de>
+
+	* src/cdargs.cc(edit_list_file): Quoted filename.
+
+2005-11-06  Stefan Kamphausen  <http://www.skamphausen.de>
+
+	* cdargs.spec.in: Fixes by Oron:
+	  - s/Copyright/License/
+	  - Install the contrib/*.{csh,sh} into /etc/profile.d/ instead
+            of the documentation directory -- so they are usable to all.
+          - Used the %configure macro (standard in RedHat and Mandriva --
+            what about Suse?).
+          - Used DESTDIR for installation (standard in automake generated
+            Makefiles).
+
+	* contrib/cdargs-tcsh.csh: Changed path of csh.  Actually one
+	should remove the path because the file must be sourced anyway.
+	Anyway... 
+
+2005-10-09  Stefan Kamphausen  <http://www.skamphausen.de>
+
+	* configure.in: Version 1.32
+
+	* README: email to website....
+
+	* cdargs.spec.in (Vendor): email to website....
+
+	* AUTHORS: email to website....
+
+	* src/cdargs.cc: Removed references to my email address.  Use
+	domain instead.
+
+2005-10-01  Stefan Kamphausen  <http://www.skamphausen.de>
+
+	* THANKS: added Geert
+
+	* contrib/cdargs-bash.sh: Patch by Geert: more quotes and the
+	sed-statement will use the first space as separater, not the last.
+
+2005-01-04  Stefan Kamphausen  <mail@skamphausen.de>
+
+        * INSTALL: signing with detached signature added.
+
+2004-12-30  Stefan Kamphausen  <mail@skamphausen.de>
+
+	* configure.in: New curses M4, version 1.31
+
+	* src/cdargs.cc(list_to_file): Creating backup now.
+	(toggle_mode): Fixed a long standing bug in which you could loose
+	almost all your bookmarks when toggling the mode with a needle
+	defined. 
+
+	* autogen.sh (SRCDIR): New curses M4, no "." in PATH
+
+	* m4/Makefile.am (EXTRA_DIST): New curses M4
+
+	* src/Makefile.am (LDADD): New curses M4
+
+	* THANKS: Added Miki and Claus for Cygwinification
+
+	* src/cdargs.cc(user_interaction): opt_no_resolve works in
+	LIST-mode, too. 
+
+2004-03-31  Stefan Kamphausen  <mail@skamphausen.de>
+
+	* configure.in: Version 1.29
+	
+	* INSTALL (Appendix): typo, add signing instruction - mainly for
+	myself. 
+
+	* doc/cdargs.1: New PgKey-behaviour.
+
+	* src/cdargs.cc(user_interaction): opt_noresolv now works in LIST
+	mode.  PageKeys now scroll the list and not the shortcut numbers,
+	which was kinda stupid anyway.  Note, however, the we don't scroll
+	in screenfulls but in 10's because this is better in terminals
+	that are vertically large, because a screenfull of scrolling
+	wouldn't do anything there.  In addition this scrolling won't wrap
+	around.
+	The adjust_shorties_offset function was removed from the sources.
+	(helpscreen): New PgKey-behaviour
+
+2003-12-22  Stefan Kamphausen  <mail@skamphausen.de>
+
+	* THANKS: changed email adress of Petra
+
+2003-12-18  Stefan Kamphausen  <mail@skamphausen.de>
+
+        * src/cdargs.cc: removed get_current_dir_name() and wrote two new
+        functions (get_cwd_as_charp) and (get_cwd_as_string).  All this to
+        overcome a bug when trying to do anything in a directory that had
+        been removed in the meantime.  Now we just exit in such a case.
+        This also involves another checkpoint in (list_from_dir) where an
+        exit was picked instead of going one directory up.  It took me
+        hours to even track that bug down!  You nasty, you!
+
+2003-06-05  Stefan Kamphausen  <mail@skamphausen.de>
+
+        * configure.in: Version 1.27
+
+        * src/cdargs.cc: renamed (abort) to (abort_cdargs) according to
+        debian bug and bugfix by Petra Malik. 
+
+        * src/cdargs.h: renamed (abort) to (abort_cdargs) ...
+
+2003-02-23  Stefan Kamphausen  <mail@skamphausen.de>
+
+        * configure.in: Version 1.26
+
+        * contrib/cdargs.el (cdargs-warped-hook): added hint with desktop
+        check in docstring 
+
+        * cdargs.spec.in: (re)added cdargs.el, which I had put into
+        cdargs.spec. 
+
+        * contrib/cdargs.el: added installation
+
+        * THANKS: added Oscar
+
+        * INSTALL: Describe the variable width settings.
+
+        * src/cdargs.cc: Applied patch by Oscar to get a description of
+        variable length. Changed that code again to have the length fixed
+        for browse mode.
+
+2003-02-16  Stefan Kamphausen  <mail@skamphausen.de>
+
+        * contrib/cdargs.el: added cdargs-warped-hook, changed the file
+        parser from a quite perlish to a more elispish way.
+        
+2003-02-13  Stefan Kamphausen  <mail@skamphausen.de>
+
+        * src/cdargs.cc(list_from_dir): when coming to a directory which
+        hadn't been visited before, using ".." make the previous directory
+        the current directory.
+
+2003-02-11  Stefan Kamphausen  <mail@skamphausen.de>
+
+        * configure.in: Version 1.24
+
+        * src/cdargs.cc: several code cleanups, fixed the handling of a
+        digit-Needle again.
+        
+        * src/cdargs.cc(terminate): print a bug report request on
+        SIGSEGV. 
+        
+
+        * doc/cdargs.1: updated keys in list mode in the COMMANDS
+        section. 
+
+        * src/cdargs.cc(user_interaction): swapping/transposing entries
+        now has its own function which can also proceed the
+        current position afterwards: swap_two_entries. New commands m and
+        M move an entry up or down and move the position, too.
+
+        (helpscreen): new commands: m and M.
+
+        (swap_two_entries): new.
+
+        * doc/cdargs.1: opt_cwd ...
+
+        * src/cdargs.cc(display_list): bugfix with longer pathnames than
+        displayed.  
+
+        (main, list_from_file, global): added opt_cwd which activates the
+        current working directory as the current entry on startup.
+
+2003-02-10  Stefan Kamphausen  <mail@skamphausen.de>
+
+        * INSTALL (Example): added cdargs.el
+
+        * doc/cdargs.1 (mode): added cdargs.el
+
+        * contrib/Makefile.am (EXTRA_DIST): added cdargs.el
+
+        * cdargs.spec (Buildroot): added cdargs.el
+
+        * cdargs.el: NEW
+        
+2003-02-08  Stefan Kamphausen  <mail@skamphausen.de>
+
+        * src/cdargs.cc(helpscreen): using PAGER instead of self-rolled
+        help-window.  
+
+2003-02-06  Stefan Kamphausen  <mail@skamphausen.de>
+
+        * configure.in: Version 1.23
+
+        * doc/cdargs.1: added DISPLAY section.
+
+        * src/cdargs.cc(display_list): added marking of list entries that
+        point to no valid directories [using a '!' in front of the path]
+        and have a list item which is equal to the current working
+        directory stand out in bold font.
+        
+        (list_from_file): changed the reading routine to correctly detect
+        descriptions and paths with whitespaces.
+
+2003-02-04  Stefan Kamphausen  <mail@skamphausen.de>
+
+        * configure.in: Version 1.22
+
+        * src/cdargs.cc(edit_list_file): honored Debians /usr/bin/editor
+        preference by stat()ing it. 
+
+        * contrib/cdargs-bash.sh: Changed completion code improver from
+        Jochen to Robi: Jochen _detected_ and Robi (partly) solved the
+        bug. 
+
+2003-02-02  Stefan Kamphausen  <mail@skamphausen.de>
+
+        * src/cdargs.cc(terminate): different way to shut up the compiler
+        that may be cleaner?
+        
+        (resizeevent) dto.
+
+2003-01-30  Stefan Kamphausen  <mail@skamphausen.de>
+
+        * src/cdargs.h: copyright -2003
+
+        * src/cdargs.cc: copyright -2003
+
+        * doc/cdargs.1 (bash): more small fixes by Petra and spell
+        checking. 
+                
+
+        * contrib/cdargs-bash.sh (_cdargs_aliases): more bugfixes by
+        Jochen Voss.
+
+2003-01-27  Stefan Kamphausen  <mail@skamphausen.de>
+
+        * src/cdargs.cc (toggle_mode): added yoffset = 0 to avoid
+        segfaults. This really feels ugly and makes me feel like rewriting
+        the whole thing even more... 
+
+        * contrib/cdargs-bash.sh (_cdargs_aliases): fixed the slash bug
+        found and solved by Jochen Voss <voss@debian.org> with the general
+        problem of special characters still lurking there at the
+        unprepared user.
+
+        * doc/cdargs.1: small fixes by Petra Malik, extended copyright
+        notice to 2003. 
+
+2002-04-27  Stefan Kamphausen  <mail@skamphausen.de>
+
+        * src/cdargs.cc: (list_to_file) no writing when a user was given
+        as option.
+
+        (main) new options: --file, --user and --output [f,u,o] to change
+        bookmarks and output files.
+
+        (list_from_file) uses new get_listfile()
+
+        (edit_list_file) uses new get_listfile()
+
+        (get_resultfile) new function
+
+        (get_listfile) new function
+
+        (usage) described new options
+
+        * doc/cdargs.1: Description of --file and --user and --output added
+
+        * contrib/cdargs-bash.sh: re-introduced the logical AND when
+        changing directories with cdargs (function cdb) 
+
+2002-04-15  Stefan Kamphausen  <mail@skamphausen.de>
+
+        * cdargs.spec.in: Added RPM spec-file written by Oron Peled. 
+
+        * INSTALL: described new tcsh file.
+
+        * doc/cdargs.1: described new tcsh file and added an extra not
+        about the shell completion.
+
+        * contrib/cdargs-tcsh.sh: added file
+
+2002-04-12  Stefan Kamphausen  <mail@skamphausen.de>
+
+        * src/cdargs.cc: (list_from_dir) added sorting of list.
+
+2002-04-10  Stefan Kamphausen  <mail@skamphausen.de>
+
+        * src/cdargs.cc: (list_from_dir) fixed long listing revisited lost
+        highlighter problem - hopefully.
+
+2002-04-09  Stefan Kamphausen  <mail@skamphausen.de>
+
+        * configure.in: Version 1.19.
+
+        * (user_interaction) added vi-keybindings for HOME and END.
+        Moved offset handling when current position leaves the screen to
+        cur_pos_add(). 
+
+        (cur_pos_add) see above.
+
+        (visible) new function. Tests whether the given position is
+        visible on the screen.
+        
+2002-04-05  Stefan Kamphausen  <mail@skamphausen.de>
+
+        * contrib/cdargs-bash.sh (_cdargs_exec): set last to empty string
+        if the last argument is an existing file, which means that no
+        alias/description was given. Start in browse mode then. 
+
+        * src/cdargs.cc: Made the appearance of "." and ".." more
+        consistent with common un*x practice and more intuitive.
+
+        Added --browse/-b option to start in browse mode. Since the
+        optional argument handling in getopt_long() seems to be a GNU
+        extension and someday I want to compile on other unices I don't
+        enable it here - it always starts with the current directory.
+
+2002-04-04  Stefan Kamphausen  <mail@skamphausen.de>
+
+        * THANKS: Added Oron Pered. 
+
+        * README: Noted the TTY-code I got from Oron Pered.
+
+        * doc/cdargs.1: Edited key labels like in (helpscreen) and added
+        the Emacs-style bindings.
+
+        * src/cdargs.cc: (init_curses) added code line for better handling
+        of cursor - effectively of not showing any cursor at all.
+
+        (helpscreen) removed alternative keybindings (now in manpage) and
+        corrected the key labels from 'left' to '<LEFT>'. 
+
+        (user_interaction) added many many emacs-style keybindings and
+        TERMINFO compile tests - inspired from cscope source :-). Thank
+        you!
+        
+        (toggle_mode) disable Needle and reread list from file when
+        entering LIST mode, which should only happen when someone presses
+        TAB twice.
+
+        (finish) clearing screen because terminals like aterm let the list
+        be displayed after finishing. I think this is wasted screen-room
+        so remove it.
+
+2002-04-03  Stefan Kamphausen  <mail@skamphausen.de>
+
+        * doc/cdargs.1: Described PageUp and PageDown.
+
+        * src/cdargs.cc: The existance of a Needle is not checked by
+        pointer but by size of Needle-string; this fixes a bug when called
+        like cdargs "" which would never save the list.
+
+        Somehow connected to this is the disabling of
+        deleting/adding/editing of the list when no saving will take
+        place. Find the tests for 'NeedleGiven'. 
+
+        Added PAGE_UP and PAGE_DN keys to move the Shortcut Digits
+        This probably shows up everywhere where you can find a
+        'shorties_offset' variable. Added this to (helpscreen)
+        
+        Corrected the positioning of active entry when deleting inside the
+        list and not the last entry.
+
+        Changed (cur_pos_add) to (cur_pos_adjust).
+
+        
+        
+        
+2002-04-01  Stefan Kamphausen  <mail@skamphausen.de>
+
+        * doc/cdargs.1: Behaviour of numbers, not saving the list when
+        Needle is given. Changed the size of the description field from 15
+        to 9 (and hold your thumbs that we don't have to recalc some
+        things from that).
+
+        * src/cdargs.cc: Pressing numbers in BROWSE mode just makes that
+        the current position, not resolving anymore in
+        (user_interaction). 
+        Fixes for reading and writing of bookmarks file when the list
+        and/or the file is empty in (list_to_file) and (list_from_file).
+        A small fix for the Current Position when it is somewhere outside
+        the displayable list in (display_list).
+        Show the current mode in (update_modeline).
+        Reflect changes in (helpscreen).
+        
+        * contrib/cdargs-bash.sh: Check for existance of ~/.cdargs in
+        function _cdargs_get_dir. Enabled _both_ cv and cb as an alias to
+        the formal cdb.
+
+2002-03-31  Stefan Kamphausen  <mail@skamphausen.de>
+
+
+        * doc/cdargs.1: Reflect one-entry-bookmark-file behaviour.
+        Tell about the new bash functions. 
+        
+        * contrib/cdargs-bash.sh: New in the distribution. A few changes
+        to the version of Dan: cv instead of cb and added function ca
+        which does not mess with the bookmarks file. Improved creation of
+        a tempfile using PID and a RANDOM number from the kernel for
+        filename. 
+
+        * src/cdargs.cc: (cur_pos_add) Added a wraparound option (default
+        true) in addition to the --nowrap option from the commandline.
+        (delete_from_default_list) fixed a bug with CurrentPosition when
+        deleting the last entry.
+        (list_from_file) Counting lines and if only one entry we show the
+        list in any case.
+
+2002-03-30  Stefan Kamphausen  <mail@skamphausen.de>
+
+        * doc/cdargs.1: Describe the Needle magic and the new option
+        --noresolve.
+        Description of the --add=[:desc:]path syntax.
+
+        * src/cdargs.cc: Some more Needle magic: if it matches a
+        description exactly that is taken unless the (new) command line
+        option  --noresolve was given. Reflect this in helpscreen.
+
+2002-03-29  Stefan Kamphausen  <mail@skamphausen.de>
+
+        * src/cdargs.cc(last_dirname): Fixed behaviour when there is a
+        trailing slash. 
+        (add_to_list_file): Only allowing absolute paths.
+        Adding new colon-description-syntax to allow passing of
+        descriptions from command line.
+        An empty string from user-interaction quits the adding of a path
+        to the list. 
+        (list_from_dir): Removed capitalization of dirnames.
+        Added empty directory listing: ".." and ".".
+
+2002-03-28  Stefan Kamphausen  <kamphausen@novelscience.com>
+
+        * src/cdargs.cc: Updated docs: mainly shell functions stuff; in
+        helpscreen() and in usage().
+
+        * doc/cdargs.1: Updated docs: mainly shell functions stuff. 
+
+        * INSTALL: Updated docs: mainly shell functions stuff. 
+
+        * THANKS: Added Juhapekka Tolvanen.
+
+2002-03-27  Stefan Kamphausen  <kamphausen@novelscience.com>
+
+        * doc/Makefile.am: brandnew and exciting: cdargs now comes with a
+        manpage :-) 
+
+        * doc/cdargs.1: Wrote manpage. Probably this need reworking.
+
+        * src/cdargs.cc: Added '?' as a key to call for help, added the
+        keys 'A' and 'C' that work just like their lowercase equivalents
+        (i.e. adding directories to the list) but ask the user to enter a
+        description string. Reflect this in helpscreen() and fix a bug in
+        helpscreen to really display all the help.
+
+2002-03-26  Stefan Kamphausen  <kamphausen@novelscience.com>
+
+        * src/cdargs.cc: Suggestions by Dan Allen: vim/mutt-style
+        keybindings, i.e. h/l for left right and k/j for up/down. 
+        The currently selected list entry is not displayed with attribute
+        A_BOLD but A_STANDOUT (which is the best highlighting mode of the
+        current terminal and I hope this works well).
+        Plus if the list to display (in LIST mode) contains only one entry
+        (usually due to filtering it) cdargs exits with that entry as the
+        result. 
+        Reflect this in helpscreen, too.
+
+2002-03-20  Stefan Kamphausen  <kamphausen@novelscience.com>
+
+        * src/cdargs.cc: Version 1.14. Added capitalized_last_dirname
+        function which e.g. is used to insert a default description when
+        adding paths to the default list.
+
+2002-02-02  Stefan Kamphausen  <mail@skamphausen.de>
+
+        * src/cdargs.cc: Version 1.13. New hotkeys: '/' and '~' which
+        switch to browse mode and show the root or home directory. Fixed a
+        bug with filenames in the root directory. Changed email adress
+        from corporate to private.
+
+2002-01-14  Stefan Kamphausen  <mail@skamphausen.de>
+
+        * src/cdargs.cc: when Needle (search pattern) is integer the
+        current position is set accordingly.
+
+2001-10-02  Stefan Kamphausen  <mail@skamphausen.de>
+
+        * src/cdargs.cc: cleaned up code formatting
+
+        * src/cdargs.h: cleaned up code formatting
+
+2001-09-28  Stefan Kamphausen  <mail@skamphausen.de>
+
+        * configure.in: version 1.11
+
+        * THANKS: Added Thanks to Tomi Ollila
+
+        * INSTALL: changed function to use return code
+
+        * src/cdargs.cc: cdargs now has a reasonable return code. So you
+        can use a better shell function. Wrote that to docs, too
+
+2001-09-27  Stefan Kamphausen  <mail@skamphausen.de>
+
+        * configure.in: version 1.1
+
+        * THANKS: Added Thanks to Damjan Lango
+
+        * src/cdargs.cc: Fixed a bug when adding a directory to a file
+        from the command line: it always added CWD because cur_list is
+        empty. Now this test only takes place when the (n)curses enginge
+        is running. 
+
+2001-09-26  Stefan Kamphausen  <mail@skamphausen.de>
+
+        * src/cdargs.cc: - added 'c' key to insert current directory
+                         - fixed a coredump in curses when adding a
+                           directory from the command line
+                         - rearranged the help screen for small terminal
+                         - fixed a missing 'break' in user_interaction
+                           which caused your listfile to shring when
+                           viewing the helpscreen                          
+                         - added history (using a C++ map) so that
+                           the current position is set when you re-enter
+                           an already visited directory.
+

@@ -1,0 +1,17 @@
+Cdargs - Copyright (c) 2001-2003 Stefan Kamphausen <http://www.skamphausen.de>
+
+You may use, alter and distribute it under the terms of the
+GNU General Public License (see file COPYING).
+
+* Description: 
+ Keep you hotspots of the filesystem in a bookmark list and warp there
+ easily or browse the filesystem with a few fast keystrokes.
+
+ inspired by the CDBM script written by Michael Schili for the german
+ iX-Magazin and the derived scripts in the discussion thread to that
+ script.  This is a complete rewrite of the whole thing in C++ with a
+ bunch of features added to it.
+
+ For an explanation see file INSTALL, start cdargs:
+ ./cdargs
+ and press 'H' to get to the help screen.

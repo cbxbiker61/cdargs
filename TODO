@@ -1,0 +1,53 @@
+TODO List for cdargs
+Time-stamp: <17-Feb-2003 20:41:53 ska>
+
+Bugs
+====
+
+1. TAB Completion with (for awk) special characters
+   I'd even extent this to the general shell plugin and completion:
+   - option -u[--user] works with the binary but not with the shell
+     plugin
+   - AWK compreply generation
+     I'd like to see common cd completion when a bookmark could be
+     resolved (of course the binary had to act in an appropriate way)
+
+
+These are the things on my personal ToDo List for this leetle
+project:
+
+[ ] Spacers in the list?
+
+[ ] TOTAL REWRITE FROM SCRATCH for cleaner design and code!
+    I'd really to see this done, but alas! who's got the time for it? 
+[ ] new keys to scroll long directory listings (SPACE and BACKSPACE or
+    should SPACE be finish-using-the-currently-shown-directory ?
+[ ] search modus: in BROWSE mode it would be quite cool to just type
+    '/ et' and automatically end up in the etc directory.
+[ ] automatic installation of shell script files and add a line to
+    source them at the end of ~/.bashrc? Well, maybe
+[ ] Fix everything for different terminals than xterm;
+	Example: in (some version of) konsole KEY_HOME and KEY_END don't
+	work properly
+[ ] And when that is done I WANT COLORS ($LS_COLORS...)!
+[?] The Legal Stuff
+[?] Some good ideas for the User Interface anybody?
+
+[ ] remove the GNU_SOURCES to be compilable on other platforms?
+
+Here come the things I probably (or definetly) won't do myself.
+Feel free to get into the game
+
+[ ] Internationalization
+[ ] the usual security flaws (buffer, printf, whatever)
+[ ] compile, run, test on various platforms (I have only linux boxes)
+[x] make a debian package - thanks to Petra Malik
+[ ] fix m4 macro setup (make barfs if you change configure.in. you
+    have to run autogen.sh in this case).
+
+Explanation:
+===========
+[ ] open subject
+[x] done (and will be removed later)
+[?] is this OK yet? (maybe needs some debugging)
+[-] action cancelled

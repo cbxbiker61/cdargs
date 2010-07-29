@@ -1,0 +1,335 @@
+.TH CDARGS "1" "March 2002"
+.SH NAME
+cdargs \- bookmarks and browser for cd shell built-in
+.SH SYNOPSIS
+.B cdargs
+[\fIOPTIONS\fR]
+.br
+.br
+.B "function cv () { "
+.br
+.B "    cdargs ""$1"" && cd ""`cat ""$HOME/.cdargsresult""`"" ;"
+.br
+.B "}"
+.br
+.B cv 
+[\fINeedle\fR]
+.br
+.SH DESCRIPTION
+With
+.I cdargs
+you can jump to various places throughout the file-system
+that are defined using a plain text, line oriented bookmarks file.
+.PP
+You can create bookmarks by editing your bookmarks file
+"$HOME/.cdargs" using your favorite editor, by using the "--add"
+option to
+.I cdargs
+or by using the built-in mechanism that will be described later.
+.PP
+While you are in 
+.I cdargs
+you can use various commands to navigate through your list of bookmarks
+and through the file-system. These are described below in the section
+"COMMANDS". The most commonly used and most obvious commands are the
+up/down keys for navigation, "ENTER" for selection of a path and "q" for
+quit.
+.PP
+To be able to actually use this program together with the shell
+built-in "cd" command you must use a little trick by defining a shell
+function. Of course the syntax for this is different between the 
+\fIcsh\fR-like shells (like \fItcsh\fR) and the \fIsh\fR-like shells
+(like \fIbash\fR).
+.PP
+For \fIsh\fR-like shells:
+.br
+function cv () {
+.br
+    cdargs "$1" && cd "`cat "$HOME/.cdargsresult"`" ;
+.br
+}
+.PP
+For \fIcsh\fR-like shells:
+.br
+alias cv 'cdargs \\!* && cd `cat $HOME/.cdargsresult`'
+.PP
+Now you only have to put the 
+.I cdargs
+binary somewhere into your path.
+
+Of course you can create functions and/or aliases for different
+purposes. You might want to add a \fIpwd\fR call to echo your current
+directories or put --nowrap in your functions to enable a different
+scrolling behavior. See section SHELL FUNCTIONS below.
+
+Since version 1.19 cdargs brings a collection of bash functions (and
+since 1.20 tcsh aliases, too) with it. You only have to source this
+in your ~/.profile or ~/.bashrc (or ~/.tcsh) and you get nice kinds of
+magic prepared (completion...). Please read the cdargs-bash.sh or
+cdargs-tcsh.csh respectively for the documentation of these functions.
+
+.SH COMMAND-LINE OPTIONS
+You can call 
+.I cdargs
+with a few options, but otherwise you probably won't call it directly
+but via the function you defined.
+.IP "\fB-h\fR or \fB--help\fR"
+display usage information and exit.
+.IP "\fB-v\fR or \fB\-\-version\fR"
+output version information and exit.
+.IP "\fB-a\fR or \fB\-\-add=\fR[:\fIdesc\fR:]\fIpath\fR"
+add \fIpath\fR to the bookmarks list using the optional \fIdesc\fR as
+description string.
+.IP "\fB-f\fR or \fB\-\-file=\fIFILE\fR"
+uses the given FILE as bookmarks file
+.IP "\fB-u\fR or \fB\-\-user=\fIUSER\fR"
+read the default bookmarks file of USER. Won't modify that file.
+.IP "\fB-o\fR or \fB\-\-output=\fIFILE\fR"
+use FILE as the result-file (who knows what The World might make of
+this feature that I can't imagine...)
+.IP "\fB-b\fR or \fB\-\-browse\fR"
+start 
+.I cdargs
+in BROWSE mode in the current directory.
+.IP "\fB-r\fR or \fB\-\-noresolve\fR"
+Don't exit with a result when the \fINeedle\fR matches a description
+exactly (which is some every-day-magic) but show a list (even if it 
+contains just one entry).
+.IP "\fB-c\fR or \fB\-\-cwd\fR"
+Make the current working directory the current entry on startup if it
+appears on the list.
+.IP "\fB\-\-nowrap\fR"
+Don't wrap the cursor around when hitting the end of the list.
+.IP \fINeedle\fR
+The Needle performs some magic which I hope improves the usage of
+cdargs. 
+
+The Needle is examined in the following order and the first
+thing that fits is taken.
+
+If \fINeedle\fR is a one-digit integer the appropriate entry is
+preselected.
+
+Otherwise if \fINeedle\fR is a string each entry of the
+list is checked whether it contains \fINeedle\fR. 
+
+Then \fINeedle\fR has two functions:
+.br
+If it just matches a substring of either path or description that
+option is placed in the list. 
+
+If it \fBexactly\fR matches a description string this is the result
+(that means cdargs closes the curses window, exits and the changing
+of directories takes place).
+ 
+If it doesn't match a line, that line won't be displayed. 
+
+And to make things even more complicated you can affect this behavior
+by using the "--noresolve" option. This option is used when you think
+you give a \fINeedle\fR which matches descriptions exactly but you don't
+want it to be resolved if it does. This option is internally turned on
+when you delete an entry (otherwise the deletion of entries until only
+one entry is left would lead to resolving) or when the bookmarks file
+contains only one entry.
+
+Finally, if the filtered list (but not the bookmarks file) contains
+only one entry it is selected and the program exits successfully,
+unless you chose --noresolve. 
+
+I can only hope that you understand this nested if babble...
+
+Please note, that the existence of a \fINeedle\fR disables the saving
+of the list at the end of the program.
+ 
+.SH "COMMANDS"
+When you are in 
+.I cdargs
+you have two modes and several commands at your hands.
+.PP
+The two modes are LIST (when your bookmark list is displayed) and
+BROWSE (when you navigate through the file-system). 
+.PP 
+The navigation keys are mostly available in Emacs and vi style for all
+maniacs out there.
+.PP
+\fBCommon Keys\fR
+.IP "\fB<UP>/<DOWN>\fR or \fBk/j\fR or \fBC-n/C-p\fR"
+move selection up/down and scroll.
+.IP "\fB<ENTER>\fR"
+select current entry.
+.IP "\fB<TAB>\fR"
+toggle modes: LIST or BROWSE.
+.IP "\fB<HOME>/<END>\fR or \fBC-a/C-e\fR"
+goto first/last entry in list.
+.IP "\fBc\fR"
+add current directory to list.
+.IP "\fBC\fR"
+add current directory to list but ask the user for a description
+.IP "\fB<PgUp>/<PgDown>\fR or \fBC-v\fR"
+Scroll the list in 10-line-steps.  This will never wraparound and does
+not honor the nowrap-option 
+.IP "\fBe, v\fR"
+edit the list in $EDITOR.
+.IP "\fBH, ?\fR"
+show the help-screen.
+.IP "\fB~, /\fR"
+browse home/root directory.
+.IP "\fBq\fR"
+quit - saving the list.
+.IP "\fBC-c, C-g, C-[ \fR"
+abort - don't save the list.
+.PP 
+
+.PP
+\fBKeys in BROWSE mode\fR
+.IP "\fB<LEFT>, h, C-b\fR"
+descent into current directory.
+.IP "\fB<RIGHT>, l, C-f\fR"
+up one directory.
+.IP "\fB[num]\fR"
+make [num] the current highlighted entry
+.IP "\fBa\fR"
+add current entry to list.
+.IP "\fBA\fR"
+add current entry to list but ask the user for a description, just
+like with 'c' and 'C'.
+.IP "\fB.\fR"
+toggle display of hidden files.
+.PP
+
+.PP
+\fBKeys in LIST mode\fR
+.IP "\fB[num]\fR"
+select and resolve entry [num] if displayed.
+.IP "\fB<LEFT>, h, C-b\fR"
+descent into the current entry.
+.IP "\fB<RIGHT>, l, C-f\fR"
+up one directory from current dir.
+.IP "\fBd\fR or \fBC-d\fR"
+delete current entry from list.
+.IP "\fBs\fR or \fBt\fR"
+swap (transpose) two entries of the list.
+.IP "\fBM\fR or \fBm\fR"
+move an entry up or down in the list and set the current position
+afterwards so that repeated keystrokes keep moving the same entry up
+and down.
+
+
+.SH SHELL FUNCTIONS
+In addition to the shell function mentioned above you might wish to
+add other commands to your function. One example is to echo the
+directory you changed to:
+
+function cv () {
+.br
+    cdargs "$1" && cd "`cat "$HOME/.cdargsresult"`" 
+                && pwd;
+.br
+}
+
+Or you can remove the file in which 
+.I cdargs
+reports it's result:
+
+function cv () {
+.br
+    cdargs "$1" && cd "`cat "$HOME/.cdargsresult"`" 
+                && rm -f "$HOME/.cdargsresult";
+.br
+}
+
+Since version 1.19 cdargs comes with a file of preset functions for
+bash: see cdargs-bash.sh in the distribution. From now on you
+only have to source that file if you are using a \fIsh\fR-like shell.
+Then you can use the shell completion to switch directories even
+faster by typing
+
+cv [TAB]
+
+Since version 1.20 cdargs comes with a file of rudimentary aliases
+(and completion) for the \fItcsh\fR.
+.br
+Any volunteers for porting all the bash functionality to \fItcsh\fR
+are welcome.
+
+.SH "DISPLAY"
+The 
+.I cdargs
+window has one line at the bottom for the display of messages like
+when you added to your list or when you hit an unknown key. 
+
+The second line from the bottom is a status line which shows the
+current directory and a one letter code for the current operation
+mode: 
+.IP "\fBB\fR" 
+for BROWSE
+.IP "\fBL\fR" 
+for LIST
+.PP
+
+The largest part of the display is used to show you either the list of
+your bookmarks or the contents of the current directory. On the left
+side you'll probably find a number which you can use for a slightly
+quicker jumping compared to using the cursor movement. These numbers
+can be moved as described above. Next comes the short description of
+an entry in brackets. This is convient when you have quite long paths
+in your bookmarks and most of them start with the same base (e.g.
+/home/user). Finally there is the actual absolute path you'll be
+warping to when finishing. Obviously the current entry is
+highlighted. 
+
+If the path is preced by a "!" it points to an invalid directory. A
+bookmark pointing to the current working directory is displayed in
+bold font (if the terminal emulation understands that attribute).
+
+
+.SH "FILES"
+.I "$HOME/.cdargs"
+personal bookmarks file.
+.TP
+.I "$HOME/.cdargsresult"
+temporary file for passing results to shell.
+.TP
+.I "contrib/cdargs-bash.sh"
+example collection of bash functions.
+.TP
+.I "contrib/cdargs-tcsh.csh"
+example collection of tcsh functions.
+.TP
+.I "contrib/cdargs.el"
+(X)Emacs front-end to personal bookmarks file
+
+.SH "REPORTING BUGS"
+Report bugs to <mail@skamphausen.de>.
+.SH "AUTHOR"
+.I cdargs
+was written by Stefan Kamphausen with add-ons by Claus Brunzema.
+Many user-interface improvements came from Dan Allen.
+.SH "SEE ALSO"
+The current version of 
+.I cdargs
+is located at 
+.IP
+http://www.skamphausen.de/software/cdargs
+.PP
+You might want to visit that site. Other than that pressing the 'H'
+key in 
+.I cdargs
+fires up a help screen.
+.SH "COPYRIGHT"
+Copyright \(co 2001-2003 Stefan Kamphausen
+.PP
+.I cdargs
+is free software; you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation; either version 2 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program; if not, write to the Free Software
+Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
