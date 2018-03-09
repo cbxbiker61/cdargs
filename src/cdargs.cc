@@ -634,7 +634,7 @@ void
 list_from_dir(const char* name) {
 
     string previous_dir = "";
-    if(name == "..") {
+    if(!strcmp(name, "..")) {
         previous_dir = get_cwd_as_string();
     }
     // Checking, Changing and Reading
@@ -734,7 +734,7 @@ void list_to_file(void) {
     }
     ofstream listfile(mylistfile.c_str());
     if (!listfile) {
-        fatal_exit("couldn't write listfile");
+        fatal_exit((char *)"couldn't write listfile");
     }
     for (listit li = default_list.begin();li != default_list.end(); ++li) {
         listfile << li->first << " " << li->second << endl;
@@ -901,8 +901,8 @@ void delete_from_default_list(int pos) {
 }
 
 void edit_list_file(void) {
-    char* editor = getenv("EDITOR");
-    if (!editor) {
+    string editor = getenv("EDITOR");
+    if (editor.empty()) {
         // FIXME: how to detect debian and the /usr/bin/editor rule?
         struct stat buf;
         if(stat("/usr/bin/editor",&buf) == 0)
@@ -912,7 +912,7 @@ void edit_list_file(void) {
     }
     endwin();
     list_to_file();
-    system((string(editor) + " \"" + get_listfile() + "\"").c_str());
+    system((editor + " \"" + get_listfile() + "\"").c_str());
     list_from_file();
     refresh();
     init_curses();
@@ -1223,8 +1223,9 @@ int max_yoffset(void) {
 
 
 void helpscreen(void) {
-    char *pager = getenv("PAGER");
-    if (!pager) {
+    const char *__pager = getenv("PAGER");
+    string pager = __pager == NULL ? "" : string(__pager);
+    if (pager.empty()) {
         // FIXME:  how to detect debian and the /usr/bin/pager rule?
         struct stat buf;
         if(stat("/usr/bin/pager",&buf) == 0) {
@@ -1238,7 +1239,7 @@ void helpscreen(void) {
         }
     }
     endwin();
-    FILE* help = popen(pager,"w");
+    FILE* help = popen(pager.c_str(),"w");
 // FIXME: error checking this doesn't work, er?
     if(help == NULL) {
         init_curses();
@@ -1247,7 +1248,7 @@ void helpscreen(void) {
     }
    
     int l = 0;
-    char* help_lines[] = {
+    string help_lines[] = {
         "cdargs (c) 2001-2003 S. Kamphausen <http://www.skamphausen.de>",
         "<UP>/<DOWN>  move selection up/down and scroll",
         "             please see manpage for alternative bindings!",
@@ -1282,13 +1283,13 @@ void helpscreen(void) {
     };
     int help_lines_size = 31;
     while (l < help_lines_size) {
-        fprintf(help,"%s\n",help_lines[l]);
+        fprintf(help,"%s\n",help_lines[l].c_str());
         l++;
     }
     fprintf(help,"\n");
     pclose(help);
     // convenience for more which exits at the end:
-    if(strstr(pager,"more")) {
+    if(strstr(pager.c_str(),"more")) {
         sleep(1);
     }
     refresh();
