@@ -1,0 +1,15 @@
+autom4te.cache/
+
+configure
+config.log
+config.status
+
+Makefile
+contrib/Makefile
+doc/Makefile
+m4/Makefile
+src/Makefile
+
+src/.deps/
+src/cdargs.o
+src/cdargs
