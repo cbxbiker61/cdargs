@@ -7,6 +7,11 @@
 # - better completion code by Robi Malik robi.malik@nexgo.de
 # - trailing path support by Damon Harper <ds+dev-cdargs@usrbin.ca> Feb 2006
 
+if [[ $SHELL == *zsh ]]; then
+	autoload bashcompinit
+	bashcompinit
+fi
+
 # Globals
 CDARGS_SORT=0   # set to 1 if you want mark to sort the list
 CDARGS_NODUPS=1 # set to 1 if you want mark to delete dups

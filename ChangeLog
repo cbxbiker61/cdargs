@@ -1,3 +1,9 @@
+2018-03-25 Kelly Anderson kelly@xilka.com
+	Version 2.0 (functionally equivalent to 1.35)
+	Major revamp to cleanup code and modernize the C++ implementation.
+	Requires C++11 support.
+	Converted to Meson/Ninja build system, autoconf was always so slow/ugly/messy.
+
 2006-03-03  Stefan Kamphausen  <http://www.skamphausen.de>
 
 	* configure.in:  Version 1.35

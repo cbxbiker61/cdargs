@@ -1,10 +1,16 @@
 Stefan Kamphausen <http://www.skamphausen.de>
 	I started this project and whenever there is an
 	I-narrator it's me :).
-	
+
 Claus Brunzema    <mail@cbrunzema.de>
 	Cleaned the code, gave hints, is user no.2
-	introduced autoconf/automake and m4 to this 
+	introduced autoconf/automake and m4 to this
 	project and more...
+
+Kelly Anderon <kelly@xilka.com>
+	Version 2.0 (functionally equivalent to 1.35)
+	Major revamp to cleanup code and modernize the C++ implementation.
+	Requires C++11 support.
+	Converted to Meson/Ninja build system, autoconf was always so slow/ugly/messy.
 
 Other Contributors: see the THANKS file :-)
