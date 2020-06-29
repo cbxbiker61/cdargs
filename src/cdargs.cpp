@@ -172,7 +172,7 @@ const string Options::DEFAULT_RESULT_FILE("~/.cdargsresult");
 
 void showVersion(void)
 {
-	cout << "cdargs - version " VERSION << endl;
+	cout << "cdargs --version " VERSION << endl;
 }
 
 void showUsage(void)
@@ -203,7 +203,7 @@ void showUsage(void)
 "Other Options\n"
 "  -f, --file=PATH    take PATH as bookmark file\n"
 "  -u, --user=USER    read (default) bookmark file of USER\n"
-"  -o,- -output=FILE  use FILE as result file\n"
+"  -o, --output=FILE  use FILE as result file\n"
 "  -r, --nowrap       change the scrolling behaviour for long lists\n"
 "  -c, --cwd          make current directory the current entry if on the list\n"
 "  -b, --browse       start in BROWSE mode with the current dir\n"
@@ -1503,4 +1503,3 @@ int main(int argc, char **argv)
 	finish(getCurrentEntry(), true);
 	exit(1);
 }
-
