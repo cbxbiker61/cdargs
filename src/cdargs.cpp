@@ -172,7 +172,7 @@ const string Options::DEFAULT_RESULT_FILE("~/.cdargsresult");
 
 void showVersion(void)
 {
-	cout << "cdargs --version " VERSION << endl;
+	cout << "cdargs " VERSION << endl;
 }
 
 void showUsage(void)
