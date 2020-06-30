@@ -6,21 +6,21 @@
  *     Author: Stefan Kamphausen <http://www.skamphausen.de>
  *
  *     Time-stamp: <26-Feb-2006 18:06:47 ska>
- * 
+ *
  *     This program is free software; you can redistribute it and/or modify
  *     it under the terms of the GNU General Public License as published by
  *     the Free Software Foundation; either version 2 of the License, or
  *     (at your option) any later version.
- * 
+ *
  *     This program is distributed in the hope that it will be useful,
  *     but WITHOUT ANY WARRANTY; without even the implied warranty of
  *     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *     GNU General Public License for more details.
- * 
+ *
  *     You should have received a copy of the GNU General Public License
  *     along with this program; if not, write to the Free Software
  *     Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
- */ 
+ */
 
 /********************************************************************/
 /* MAN, IF YOU DIDN'T TRY TO FIX THIS CODE YOU DON'T KNWO HOW MUCH  */
@@ -32,7 +32,7 @@
 // damn, if you remove this, you get lots of trouble that _I_ don't
 // wanna get involved in. I've been reading include files for more
 // than one hour now, and that's my decision.  The code is a mess
-// anyway. 
+// anyway.
 #ifndef _GNU_SOURCE
 # define _GNU_SOURCE
 #endif
@@ -173,7 +173,7 @@ int main(int argc, char** argv) {
                 if (optname == "output") {
                     opt_resultfile = string(optarg);
                 }
-                break;             
+                break;
             case 'a':
                 argument = string(optarg);
                 add_to_list_file(argument);
@@ -215,7 +215,7 @@ int main(int argc, char** argv) {
         Needle = argv[optind];
         if(strlen(Needle) > 0) {
             NeedleGiven = true;
-        } 
+        }
         if(strlen(Needle) == 1 && isdigit(Needle[0])) {
             CurrPosition = atoi(Needle);
             Needle = NULL;
@@ -248,7 +248,7 @@ int main(int argc, char** argv) {
             break;
         }
     }
-   
+
     finish(current_entry(), true);
     exit(1);
 }
@@ -259,7 +259,7 @@ void toggle_mode(void) {
         list_from_dir(".");
     } else {
         if(listfile_empty) { // list was empty at start
-            if(!default_list.empty()) { // but isn't now 
+            if(!default_list.empty()) { // but isn't now
                 list_to_file();
                 list_from_file();
                 mode = LIST;
@@ -324,7 +324,7 @@ bool user_interaction(int c) {
             CurrPosition = num+yoffset;
             return true;
         }
-        break;      
+        break;
 
         // ==== Modes
     case '.':
@@ -333,7 +333,7 @@ bool user_interaction(int c) {
         break;
     case '\t': // TAB
         toggle_mode();
-        break;      
+        break;
 
         // ==== Navigate The List
     case 'j':       // vi
@@ -377,14 +377,14 @@ bool user_interaction(int c) {
         }
         yoffset = max_yoffset();
         break;
-      
+
         //==== move the shortcut digits ('shorties')
         // FIXME case ??:  //vi
         // FIXME maybe change the scrolling behaviour to not take the window but the whole
         // list? That means recentering when shorties leave the screen (adjust yoffset and
-        // CurrPosition) 
+        // CurrPosition)
     case CTRL('v'): // emacs
-#if TERMINFO      
+#if TERMINFO
     case KEY_NPAGE:
 #endif
         for(int i=0;i<10;i++) {
@@ -400,7 +400,7 @@ bool user_interaction(int c) {
         for(int i=0;i<10;i++) {
             cur_pos_adjust(-1,false);
         }
-        break;      
+        break;
 
     case 'h':       // vi
     case CTRL('b'): // emacs
@@ -571,7 +571,7 @@ string get_description_from_user(void) {
 
 bool
 list_from_file(void) {
-   
+
     string desc;
     string path;
     int linecount=0;
@@ -643,11 +643,11 @@ list_from_dir(const char* name) {
         msg += name;
         message(msg.c_str());
     }
-   
+
     DIR* THISDIR;
     string cwd = get_cwd_as_string();
     THISDIR = opendir(cwd.c_str());
-   
+
     if (THISDIR == NULL) {
         string msg = "couldn't read dir: ";
         msg += cwd;
@@ -677,10 +677,10 @@ list_from_dir(const char* name) {
         fullname = cwd + string("/") + string(en->d_name);
 
         fullname=canonify_filename(fullname);
-      
+
         stat(fullname.c_str(), &buf);
         if (!S_ISDIR(buf.st_mode)) continue;
-      
+
         string lastdir = last_dirname(fullname);
         cur_list.push_back(make_pair(lastdir, fullname));
     }
@@ -690,7 +690,7 @@ list_from_dir(const char* name) {
     if(cur_list.size() == 1) {
         path = path.substr(0,path.find(last_dirname(path)));
         cur_list.push_back(make_pair(desc,path));
-      
+
     }
     sort(cur_list.begin(),cur_list.end());
 
@@ -770,13 +770,13 @@ bool do_not_show(const char* name) {
 void cur_pos_adjust(int n, bool wraparound) {
     int newpos = CurrPosition + n;
     int max, min;
-   
+
     if (mode == LIST) {
         max = default_list.size() - 1;
     } else {
         max = cur_list.size() - 1;
     }
-    min = 0;   
+    min = 0;
     if (newpos < min) {
         if (opt_no_wrap || !wraparound) return;
         newpos = max;
@@ -850,7 +850,7 @@ void add_to_default_list(string path,
     } else {
         desc = description;
     }
-   
+
     string msg = "added :" +desc+":" + path;
     default_list.push_back(make_pair(desc, path));
     message(msg.c_str());
@@ -860,7 +860,7 @@ void add_to_list_file(string path) {
     // get rid of leading = if there
     if (path.at(0) == '=') {
         path = path.substr(1);
-    }   
+    }
     // the syntax for passing descriptions from the command line is:
     // --add=:desc:/absolute/path
     string desc;
@@ -992,7 +992,7 @@ string canonify_filename(string filename) {
     if((pos = filename.find("//",0)) < filename.size()) {
         filename.replace(pos,2,"/");
     }
-   
+
     if (filename[0] != '~') {
         return filename;
     }
@@ -1028,13 +1028,13 @@ void usage(void) {
     printf("                              and exit\n");
     printf("\n");
     printf("Other Options\n");
-    printf("  -f, --file=PATH    take PATH as bookmark file\n"); 
-    printf("  -u, --user=USER    read (default) bookmark file of USER\n"); 
-    printf("  -o,- -output=FILE  use FILE as result file\n"); 
+    printf("  -f, --file=PATH    take PATH as bookmark file\n");
+    printf("  -u, --user=USER    read (default) bookmark file of USER\n");
+    printf("  -o, --output=FILE  use FILE as result file\n");
     printf("  -r, --nowrap       change the scrolling behaviour for long lists\n");
     printf("  -c, --cwd          make current directory the current entry if on the list\n");
-    printf("  -b, --browse       start in BROWSE mode with the current dir\n"); 
-    printf("  -h, --help         print this help message and exit\n"); 
+    printf("  -b, --browse       start in BROWSE mode with the current dir\n");
+    printf("  -h, --help         print this help message and exit\n");
     printf("  -v, --version      print version info and exit\n");
     printf("\n");
 }
@@ -1079,7 +1079,7 @@ void display_list(void) {
     if (mode == LIST) {
         // perform some magic here: if the list contains just one
         // entry (probably due to filtering by giving a Needle)
-        // we are done. 
+        // we are done.
         if(default_list.size() == 1 && !opt_no_resolve) {
             finish(current_entry(), true);
         } else {
@@ -1112,7 +1112,7 @@ void display_list(void) {
     } else {
         actual_maxlength = DESCRIPTION_BROWSELENGTH;
     }
-   
+
     string cwd  = get_cwd_as_string();
     for (listit li = list.begin() + yoffset;li != list.end(); ++li) {
         //string desc = li->first.substr(0, (DESCRIPTION_MAXLENGTH+1));
@@ -1138,10 +1138,10 @@ void display_list(void) {
         } else {
             printw("  ");
         }
-      
+
         // Compose format string for printw. Notice %% to represent literal %
         sprintf(description_format, " [%%-%ds] %%c%%s", actual_maxlength );
-      
+
         printw(description_format, desc.c_str(), validmarker,path.c_str());
         if (pos == CurrPosition - yoffset) {
             attroff(A_STANDOUT);
@@ -1150,7 +1150,7 @@ void display_list(void) {
             attroff(A_BOLD);
         }
         pos++;
-    }      
+    }
 }
 
 void update_modeline(void) {
@@ -1187,7 +1187,7 @@ void set_areas(void) {
 
 void resizeevent(int sig) {
     // shut up, compiler
-    (void)sig;  
+    (void)sig;
     // re-connect
     signal(SIGWINCH, resizeevent);
     // FIXME: is this the correct way??
@@ -1245,7 +1245,7 @@ void helpscreen(void) {
         message("could not open pager");
         return;
     }
-   
+
     int l = 0;
     char* help_lines[] = {
         "cdargs (c) 2001-2003 S. Kamphausen <http://www.skamphausen.de>",
@@ -1293,7 +1293,7 @@ void helpscreen(void) {
     }
     refresh();
     init_curses();
-}   
+}
 
 /************************************************/
 /*                     EXITs                    */
@@ -1311,7 +1311,7 @@ void terminate(int sig) {
         fprintf(stderr,"programm received signal %d\n",sig);
         fprintf(stderr,"This should never happen.\n");
         fprintf(stderr,"Maybe you want to send an email to the author and report a bug?\n");
-        fprintf(stderr,"Author: Stefan Kamphausen <http://www.skamphausen.de>\n"); 
+        fprintf(stderr,"Author: Stefan Kamphausen <http://www.skamphausen.de>\n");
     }
     fprintf(stderr,"abort.\n");
     exit(1);
@@ -1324,7 +1324,7 @@ void finish(string result, bool retval) {
     refresh();   // ..and make sure we really see the clean screen
     //resetty();   // ??
     endwin();    // finish the curses at all
-   
+
     // only save if list was not filtered!
     if (!NeedleGiven){
         list_to_file();
@@ -1359,7 +1359,7 @@ void abort_cdargs(void) {
 bool valid(string path, pathtype mode) {
     struct stat buf;
     string canon_path = canonify_filename(path);
-   
+
     if(mode == PATH_IS_FILE) {
         stat(canon_path.c_str(), &buf);
         if (S_ISREG(buf.st_mode)) return true;
