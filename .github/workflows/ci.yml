@@ -13,6 +13,6 @@ jobs:
     - run: |
         mkdir build
         cd build
-        meson --prefix /usr --libdir /usr -Dbuild-docs=true ..
+        meson --prefix=/usr --libdir=lib -Dbuild-docs=true ..
         ninja -v
-        sudo ninja install -v
+        DESTDIR=. ninja install -v
