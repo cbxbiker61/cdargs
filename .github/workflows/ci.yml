@@ -1,0 +1,17 @@
+name: ci
+
+on: [ push, pull_request ]
+
+jobs:
+  macos:
+    runs-on: macos-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Install build dependencies
+      run: |
+        brew install meson ninja pkg-config
+    - run: |
+        mkdir build
+        cd build
+        meson --prefix /usr --libdir /usr -Dbuild-docs=true ..
+        ninja -v
