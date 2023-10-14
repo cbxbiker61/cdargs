@@ -56,6 +56,7 @@ using namespace std;
 # include <unistd.h>
 # include <signal.h>
 # include <string.h>
+# include <limits.h>
 
 //# if defined(USE_NCURSES) && !defined(RENAMED_NCURSES)
 # if defined(HAVE_NCURSES_H)
